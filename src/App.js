@@ -1,9 +1,20 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import {connect} from './socket';
+
+
 
 class App extends Component {
+
+  componentDidMount(){
+    connect(message => {
+      console.log(message);
+    });
+  }
+
   render() {
+
     return (
       <div className="App">
         <header className="App-header">
