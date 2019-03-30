@@ -1,11 +1,16 @@
 import openSocket from "socket.io-client";
 const socket = openSocket("http://localhost:5000");
 
-function connect(cb) {
-    socket.on("chat", message => {
-        console.log(message);
+//메세지 받기
+function msgOn(cb) { 
+    socket.on('chat', message => {
         cb(message);
     });
 }
 
-export {connect};
+//메세지 보내기
+function msgEmit(msg) {
+    socket.emit('chat', msg);
+}
+
+export {msgOn, msgEmit};
