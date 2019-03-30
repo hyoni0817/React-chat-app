@@ -6,8 +6,9 @@ const io = require("socket.io")(server);
 io.set("origins", "*:*");
 io.on("connection", socket => {
     console.log("Client Successfully Connected");
-
-    io.sockets.emit("chat", "hello world");
+    socket.on('chat', msg => { // msgEmit에서 메세지 받기
+        io.sockets.emit("chat", msg); 
+    })
 })
 
 server.listen(5000, () => {
