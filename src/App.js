@@ -58,6 +58,7 @@ class App extends Component {
         <li key={idx}>{msg}</li>
       ))
       return (
+        <Fragment>
           <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"></link>
           <ul id="messages">
             {msgList}
