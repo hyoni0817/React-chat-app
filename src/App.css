@@ -27,12 +27,11 @@ form {
   background: white;
   position:fixed;
   bottom: 0;
-  padding: 10px;
   width: 100%;
 }
 
 #messages {
-  list-style-type: none; margin-bottom: 40px; padding: 0;
+  list-style-type: none; margin-bottom: 52px; padding: 0;
 }
 #messages li {
   padding: 5px 10px; 
