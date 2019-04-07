@@ -8,7 +8,6 @@ import { withStyles } from '@material-ui/core/styles';
 import Icon from '@material-ui/core/Icon';
 import TextField from '@material-ui/core/TextField';
 
-
 const styles = theme => ({
   button: {
     margin: theme.spacing.unit,
@@ -40,7 +39,10 @@ class App extends Component {
       this.setState({
         msgData:msgData.concat(message)
       })
+      //새 메시지가 추가될 때 마다 스크롤이 아래로 향한다.
+      window.scrollTo(0, document.body.scrollHeight);
     });
+
   }
 
   handleSubmit = (e) => {
@@ -50,6 +52,7 @@ class App extends Component {
     this.setState({ message : '' });
     this.input.current.focus();
   }
+  
   render() {
 
       const { classes } = this.props;
@@ -84,6 +87,7 @@ class App extends Component {
         </Fragment>
       );
   }
+
 }
 App.propTypes = {
   classes: PropTypes.object.isRequired,
