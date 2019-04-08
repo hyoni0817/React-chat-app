@@ -26,7 +26,7 @@ class App extends Component {
   input = React.createRef();
   state = {
     message : '',
-    msgData : []
+    msgData : [],
   }
 
   componentDidMount(){
@@ -35,9 +35,9 @@ class App extends Component {
     msgOn(message => {
       // 리스트로 메세지 보여주기 위한 코드
       const {msgData} = this.state; 
-      
+      const output = {message : message, myMsg : 'N'}
       this.setState({
-        msgData:msgData.concat(message)
+        msgData:msgData.concat(output)
       })
       //새 메시지가 추가될 때 마다 스크롤이 아래로 향한다.
       window.scrollTo(0, document.body.scrollHeight);
@@ -47,25 +47,32 @@ class App extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    msgEmit(this.state.message);
+    const {message, msgData} = this.state; 
+    const output = {message : message, myMsg : 'Y'};
+    msgEmit(message);
 
-    this.setState({ message : '' });
+    this.setState({ message : '', msgData: msgData.concat(output)});
     this.input.current.focus();
+    
   }
   
   render() {
 
       const { classes } = this.props;
       const {msgData} = this.state;
-      const msgList = msgData.map((msg, idx) => (
-        <li key={idx}>{msg}</li>
-      ))
+      var id = 0;
+      
+      const msgList = msgData.map((msg) => {
+        let msgStat = (msg.myMsg !== 'Y' ? "other-msg" : "my-msg");
+        return <div className={msgStat} key={++id}><span className="msg">{msg.message}</span></div>
+      })
+      
       return (
         <Fragment>
           <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"></link>
-          <ul id="messages">
+          <div id="msgList">
             {msgList}
-          </ul>
+          </div>
           <form onSubmit={this.handleSubmit}>
             <TextField
               id="contents"
