@@ -30,16 +30,28 @@ form {
   width: 100%;
 }
 
-#messages {
-  list-style-type: none; margin-bottom: 52px; padding: 0;
-}
-#messages li {
-  padding: 5px 10px; 
-}
-#messages li:nth-child(odd) {
-  background: #eee;
+#msgList {
+  margin-bottom: 52px; padding: 0;
 }
 
+.msg {
+  width: 200px;
+  background-color: #bdf;
+  border:2px solid #1bf;
+  padding:0.5em;
+  line-height: 3em;
+  border-radius:0.5em;
+  -moz-border-radius: 0.5em;
+  -webkit-border-radius: 0.5em;
+}
+
+#msgList .other-msg {
+  text-align:left;
+}
+
+#msgList .my-msg {
+  text-align:right;
+}
 
 @keyframes App-logo-spin {
   from {
