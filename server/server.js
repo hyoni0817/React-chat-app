@@ -9,10 +9,8 @@ io.on("connection", socket => {
 
     socket.on('chat', msg => { // msgEmit에서 메세지 받기
 
-        var output = {userid : socket.id, msg : msg};
-
         //나를 제외하고 메세지 전송하기
-        socket.broadcast.emit("chat", output)
+        socket.broadcast.emit("chat", msg)
 
         //나를 포함해서 메세지 전송하기
         //io.sockets.emit("chat", output); 
