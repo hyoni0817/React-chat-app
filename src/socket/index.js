@@ -4,7 +4,7 @@ const socket = openSocket("http://localhost:5000");
 //메세지 받기
 function msgOn(cb) { 
     socket.on('chat', message => {
-        cb(message.msg);
+        cb(message);
     });
 }
 
