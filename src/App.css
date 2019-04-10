@@ -25,13 +25,17 @@
 
 form {
   background: white;
-  position:fixed;
+  position: fixed;
   bottom: 0;
   width: 100%;
 }
 
 #msgList {
-  margin-bottom: 52px; padding: 0;
+  height: 100%;
+  margin-bottom: 52px;
+  padding: 0;
+  overflow: auto;
+  padding: 1rem;
 }
 
 .msg {
