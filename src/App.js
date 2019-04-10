@@ -24,13 +24,14 @@ const styles = theme => ({
 
 class App extends Component {
   input = React.createRef();
+
   state = {
     message : '',
     msgData : [],
   }
 
   componentDidMount(){
-    //const {msgData} = this.state; 
+    //const {msgData} = this.state;
     //이곳에 선언하면 메세지가 쌓이지 못하고 새로운 내용으로 계속 교체된다.
     msgOn(message => {
       // 리스트로 메세지 보여주기 위한 코드
@@ -39,25 +40,50 @@ class App extends Component {
       this.setState({
         msgData:msgData.concat(output)
       })
-      //새 메시지가 추가될 때 마다 스크롤이 아래로 향한다.
+      //새 메시지가 추가될 때마다 스크롤이 아래로 향한다.
       window.scrollTo(0, document.body.scrollHeight);
     });
 
   }
 
+  getSnapshotBeforeUpdate(prevProps, prevState) {
+
+    if (prevState.msgData !== this.state.msgData) {
+      const { scrollTop, scrollHeight } = this.msgList;
+
+      return {
+        scrollTop,
+        scrollHeight
+      };
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (snapshot) {
+      const { scrollTop } = this.msgList;
+
+      if (scrollTop !== snapshot.scrollTop) return; // 기능이 이미 구현되어있다면 처리하지 않습니다.
+     
+      //본인이 작성한 메시지가 추가될 때마다 스크롤이 아래로 향한다.
+      window.scrollTo(0,document.body.scrollHeight)
+
+    }
+  }
+
+
   handleSubmit = (e) => {
     e.preventDefault();
     const {message, msgData} = this.state; 
     const output = {message : message, myMsg : 'Y'};
+    this.setState({msgData : msgData.concat(output)});
     msgEmit(message);
-
     this.setState({ message : '', msgData: msgData.concat(output)});
+
     this.input.current.focus();
     
   }
   
   render() {
-
       const { classes } = this.props;
       const {msgData} = this.state;
       var id = 0;
@@ -70,7 +96,7 @@ class App extends Component {
       return (
         <Fragment>
           <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"></link>
-          <div id="msgList">
+          <div id="msgList" ref={ref => {this.msgList = ref;}}>
             {msgList}
           </div>
           <form onSubmit={this.handleSubmit}>
@@ -93,9 +119,11 @@ class App extends Component {
           </form>
         </Fragment>
       );
+      
   }
 
 }
+
 App.propTypes = {
   classes: PropTypes.object.isRequired,
 };
