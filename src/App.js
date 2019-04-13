@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import './App.css';
-import { msgOn, msgEmit } from './socket';
+import { msgOn, msgEmit, userView } from './socket';
 
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
@@ -44,6 +44,14 @@ class App extends Component {
       window.scrollTo(0, document.body.scrollHeight);
     });
 
+    //입장한 user정보 msgData에 저장하기
+    userView( userInfo => {
+      const {msgData} = this.state;
+      
+      this.setState({
+        msgData:msgData.concat(userInfo)
+      })
+    })
   }
 
   getSnapshotBeforeUpdate(prevProps, prevState) {
@@ -89,8 +97,17 @@ class App extends Component {
       var id = 0;
       
       const msgList = msgData.map((msg) => {
-        let msgStat = (msg.myMsg !== 'Y' ? "other-msg" : "my-msg");
-        return <div className={msgStat} key={++id}><span className="msg">{msg.message}</span></div>
+        let msgStat = '';
+        if(msg.participation == undefined) {
+          msgStat = (msg.myMsg !== 'Y' ? "other-msg" : "my-msg");
+          return <div className={msgStat} key={++id}><span className="msg">{msg.message}</span></div>
+        } else {
+            if(msg.participation === 'Y') {
+              return <div key={++id}><p id="user-entrace">{msg.userId}님이 입장했습니다</p></div>
+            } else {
+              return <div key={++id}><p id="user-out">{msg.userId}님이 퇴장했습니다</p></div>
+            }          
+        }
       })
       
       return (
