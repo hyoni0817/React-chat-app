@@ -57,6 +57,16 @@ form {
   text-align:right;
 }
 
+#user-entrace {
+  background-color: rgb(71, 224, 173);
+  text-align:center;
+}
+
+#user-out {
+  background-color: thistle;
+  text-align:center;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
