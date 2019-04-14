@@ -26,8 +26,14 @@ io.on("connection", socket => {
 
         //나를 포함해서 메세지 전송하기
         //io.sockets.emit("chat", output); 
+    });
+
+    socket.on('disconnect', () => {
+        userInfo.participation = 'N';
+        io.sockets.emit("entrace", userInfo);
     })
-})
+
+});
 
 server.listen(5000, () => {
     console.log("Backend Server is running on http://localhost:5000")
