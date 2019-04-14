@@ -8,6 +8,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Icon from '@material-ui/core/Icon';
 import TextField from '@material-ui/core/TextField';
 
+let saveStat = false;
 const styles = theme => ({
   button: {
     margin: theme.spacing.unit,
@@ -28,8 +29,9 @@ class App extends Component {
   state = {
     message : '',
     msgData : [],
+    myNick : ''
   }
-
+  
   componentDidMount(){
     //const {msgData} = this.state;
     //이곳에 선언하면 메세지가 쌓이지 못하고 새로운 내용으로 계속 교체된다.
@@ -47,7 +49,11 @@ class App extends Component {
     //입장한 user정보 msgData에 저장하기
     userView( userInfo => {
       const {msgData} = this.state;
-      
+
+      if(saveStat === false) {
+        this.setState({myNick : userInfo.userId})
+        saveStat = true;
+      }
       this.setState({
         msgData:msgData.concat(userInfo)
       })
@@ -93,19 +99,19 @@ class App extends Component {
   
   render() {
       const { classes } = this.props;
-      const {msgData} = this.state;
+      const {msgData, myNick} = this.state;
       var id = 0;
       
       const msgList = msgData.map((msg) => {
         let msgStat = '';
-        if(msg.participation == undefined) {
+        if(msg.participation === undefined) {
           msgStat = (msg.myMsg !== 'Y' ? "other-msg" : "my-msg");
           return <div className={msgStat} key={++id}><span className="msg">{msg.message}</span></div>
         } else {
             if(msg.participation === 'Y') {
-              return <div key={++id}><p id="user-entrace"><strong>{msg.userId}님</strong>이 입장했습니다</p></div>
+              return (myNick === msg.userId ? <div key={++id}><p id="my-entrace"><strong>{msg.userId}(나)님</strong>이 입장했습니다.</p></div> : <div key={++id}><p id="user-entrace"><strong>{msg.userId}님</strong>이 입장했습니다.</p></div>)
             } else {
-              return <div key={++id}><p id="user-out"><strong>{msg.userId}님</strong>이 퇴장했습니다</p></div>
+              return <div key={++id}><p id="user-out"><strong>{msg.userId}님</strong>이 퇴장했습니다.</p></div>
             }          
         }
       })
