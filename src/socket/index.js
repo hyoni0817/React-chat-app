@@ -10,7 +10,7 @@ function msgOn(cb) {
 
 //유저 정보 전달
 function userView(cb) {
-    socket.on('entrace', message => {
+    socket.on('sysmsg', message => {
         const output = {userId : message.userId, participation: message.participation}
         cb(output);
    

@@ -15,7 +15,7 @@ io.on("connection", socket => {
     userInfo.participation = 'Y';
     user.push(userInfo);
 
-    io.sockets.emit("entrace", userInfo); //user정보 보내기
+    io.sockets.emit("sysmsg", userInfo); //user정보 보내기
 
     
     socket.on('chat', msg => { // msgEmit에서 메세지 받기
@@ -30,7 +30,7 @@ io.on("connection", socket => {
 
     socket.on('disconnect', () => {
         userInfo.participation = 'N';
-        io.sockets.emit("entrace", userInfo);
+        io.sockets.emit("sysmsg", userInfo);
     })
 
 });
