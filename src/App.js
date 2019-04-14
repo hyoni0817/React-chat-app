@@ -103,9 +103,9 @@ class App extends Component {
           return <div className={msgStat} key={++id}><span className="msg">{msg.message}</span></div>
         } else {
             if(msg.participation === 'Y') {
-              return <div key={++id}><p id="user-entrace">{msg.userId}님이 입장했습니다</p></div>
+              return <div key={++id}><p id="user-entrace"><strong>{msg.userId}님</strong>이 입장했습니다</p></div>
             } else {
-              return <div key={++id}><p id="user-out">{msg.userId}님이 퇴장했습니다</p></div>
+              return <div key={++id}><p id="user-out"><strong>{msg.userId}님</strong>이 퇴장했습니다</p></div>
             }          
         }
       })
