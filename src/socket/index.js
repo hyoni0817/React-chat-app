@@ -3,15 +3,17 @@ const socket = openSocket("http://localhost:5000");
 
 //메세지 받기
 function msgOn(cb) { 
-    socket.on('chat', message => {
-        cb(message.msg);
+    socket.on('chat', data => {
+        cb(data);
     });
 }
 
 //유저 정보 전달
 function userView(cb) {
     socket.on('sysmsg', message => {
-        const output = {userId : message.userId, participation: message.participation}
+        let date = new Date();
+        let msgDate = date.getFullYear() + "년" + (date.getDay()+1) + "월" + date.getDate();
+        const output = {userId : message.userId, date :  msgDate, time : 'N', participation: message.participation}
         cb(output);
    
     })

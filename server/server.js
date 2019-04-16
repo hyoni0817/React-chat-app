@@ -19,8 +19,7 @@ io.on("connection", socket => {
 
     
     socket.on('chat', msg => { // msgEmit에서 메세지 받기
-        
-        var output = {msg : msg, id : userInfo.userId};
+        var output = {msg : msg.message, date:msg.date, time:msg.time, id : userInfo.userId};
         //나를 제외하고 메세지 전송하기
         socket.broadcast.emit("chat", output)
 
