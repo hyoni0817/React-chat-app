@@ -9,6 +9,7 @@ import Icon from '@material-ui/core/Icon';
 import TextField from '@material-ui/core/TextField';
 
 let saveStat = false;
+let sameCnt = 0;
 const styles = theme => ({
   button: {
     margin: theme.spacing.unit,
@@ -35,10 +36,16 @@ class App extends Component {
   componentDidMount(){
     //const {msgData} = this.state;
     //이곳에 선언하면 메세지가 쌓이지 못하고 새로운 내용으로 계속 교체된다.
-    msgOn(message => {
+    msgOn(data => {
       // 리스트로 메세지 보여주기 위한 코드
       const {msgData} = this.state; 
-      const output = {message : message, myMsg : 'N'}
+      
+      if((msgData[msgData.length-1].id == data.id) && (msgData[msgData.length-1].time == data.time)){
+        sameCnt++;
+      } else {
+        sameCnt = 0;
+      }
+      const output = {message : data.msg, date : data.date, time : data.time, samecnt : sameCnt, id : data.id, myMsg : 'N'}
       this.setState({
         msgData:msgData.concat(output)
       })
@@ -88,9 +95,15 @@ class App extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     const {message, msgData} = this.state; 
-    const output = {message : message, myMsg : 'Y'};
+    let date = new Date();
+    let msgDate = date.getFullYear() + "년" + (date.getDay()+1) + "월" + date.getDate();
+    let amORpm = (date.getHours() < 12 ? "오전 " : "오후 ")
+    let msgTime = amORpm + (date.getMinutes() < 10 ? date.getHours() + ":" + "0" + date.getMinutes() : date.getHours() + ":" + date.getMinutes());
+
+    const output = {message : message, date : msgDate, time : msgTime, myMsg : 'Y'};
+    const sendData = {message : message, date : msgDate, time : msgTime};
     this.setState({msgData : msgData.concat(output)});
-    msgEmit(message);
+    msgEmit(sendData);
     this.setState({ message : '', msgData: msgData.concat(output)});
 
     this.input.current.focus();
@@ -100,13 +113,22 @@ class App extends Component {
   render() {
       const { classes } = this.props;
       const {msgData, myNick} = this.state;
+      let date = new Date();
+      let amORpm = (date.getHours() < 12 ? "오전 " : "오후 ")
       var id = 0;
       
-      const msgList = msgData.map((msg) => {
-        let msgStat = '';
+      const msgList = msgData.map((msg, idx) => {
+        let msgStat = '', msgBox = '', dateView = '', userView = '';
+        
+        dateView = ( idx !== 0 && (msg.time !== msgData[idx-1].time) ? msg.time : (idx !== 0 && (msg.id !== msgData[idx-1].id) ? msg.time : ''));
+        userView = (idx !== 0 && (msg.time !== msgData[idx-1].time) ? <span className="user-id"><strong>{msg.id}</strong><br></br></span> : (idx !== 0 && (msg.id !== msgData[idx-1].id) ? <span className="user-id"><strong>{msg.id}</strong><br></br></span> : ''));
+
+
         if(msg.participation === undefined) {
           msgStat = (msg.myMsg !== 'Y' ? "other-msg" : "my-msg");
-          return <div className={msgStat} key={++id}><span className="msg">{msg.message}</span></div>
+          msgBox = ( msgStat === 'other-msg' ? <div className={msgStat} key={++id}>{userView}<span className="msg">{msg.message}</span><br></br><span>{dateView}</span></div> : <div className={msgStat} key={++id}><span className="msg">{msg.message}</span><br></br><span>{dateView}</span></div>)
+
+          return msgBox;
         } else {
             if(msg.participation === 'Y') {
               return (myNick === msg.userId ? <div key={++id}><p id="my-entrace"><strong>{msg.userId}(나)님</strong>이 입장했습니다.</p></div> : <div key={++id}><p id="user-entrace"><strong>{msg.userId}님</strong>이 입장했습니다.</p></div>)
