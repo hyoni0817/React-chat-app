@@ -92,7 +92,8 @@ class App extends Component {
     let date = new Date();
     let msgDate = date.getFullYear() + "년" + (date.getDay()+1) + "월" + date.getDate();
     let amORpm = (date.getHours() < 12 ? "오전 " : "오후 ")
-    let msgTime = amORpm + (date.getMinutes() < 10 ? date.getHours() + ":" + "0" + date.getMinutes() : date.getHours() + ":" + date.getMinutes());
+    let hours = (date.getHours()>0 && date.getHours() % 12 ? date.getHours() % 12 : 12);
+    let msgTime = amORpm + (date.getMinutes() < 10 ? hours + ":" + "0" + date.getMinutes() : date.getHours() + ":" + date.getMinutes());
 
     const output = {message : message, date : msgDate, time : msgTime, myMsg : 'Y'};
     const sendData = {message : message, date : msgDate, time : msgTime};
@@ -111,7 +112,6 @@ class App extends Component {
       const msgList = msgData.map((msg, idx) => {
         let msgStat = '', msgBox = '', timeView = '', userView = '';
 
-        console.log("idx:",idx,msgData[idx+1] !== undefined)
         timeView = ( msgData[idx+1] !== undefined && (msgData[idx+1].id === msg.id) && (msgData[idx+1].time === msg.time) ? '' : msg.time);
         userView = (idx !== 0 && (msg.time !== msgData[idx-1].time) ? <span className="user-id"><strong>{msg.id}</strong><br></br></span> : (idx !== 0 && (msg.id !== msgData[idx-1].id) ? <span className="user-id"><strong>{msg.id}</strong><br></br></span> : ''));
 
