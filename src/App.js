@@ -9,7 +9,6 @@ import Icon from '@material-ui/core/Icon';
 import TextField from '@material-ui/core/TextField';
 
 let saveStat = false;
-let sameCnt = 0;
 const styles = theme => ({
   button: {
     margin: theme.spacing.unit,
@@ -40,12 +39,7 @@ class App extends Component {
       // 리스트로 메세지 보여주기 위한 코드
       const {msgData} = this.state; 
 
-      if((msgData[msgData.length-1].id == data.id) && (msgData[msgData.length-1].time == data.time)){
-        sameCnt++;
-      } else {
-        sameCnt = 0;
-      }
-      const output = {message : data.msg, date : data.date, time : data.time, samecnt : sameCnt, id : data.id, myMsg : 'N'}
+      const output = {message : data.msg, date : data.date, time : data.time, id : data.id, myMsg : 'N'}
       this.setState({
         msgData:msgData.concat(output)
       })
@@ -113,17 +107,17 @@ class App extends Component {
   render() {
       const { classes } = this.props;
       const {msgData, myNick} = this.state;
-      let date = new Date();
       var id = 0;
       const msgList = msgData.map((msg, idx) => {
-        let msgStat = '', msgBox = '', dateView = '', userView = '';
+        let msgStat = '', msgBox = '', timeView = '', userView = '';
 
-        dateView = ( !(msgData[idx+1] !== undefined && (msgData[idx+1].samecnt > msg.samecnt)) ? msg.time : (msgData[idx+1] !== undefined && (msg.id !== msgData[idx+1].id) ? msg.time : ''));
+        console.log("idx:",idx,msgData[idx+1] !== undefined)
+        timeView = ( msgData[idx+1] !== undefined && (msgData[idx+1].id === msg.id) && (msgData[idx+1].time === msg.time) ? '' : msg.time);
         userView = (idx !== 0 && (msg.time !== msgData[idx-1].time) ? <span className="user-id"><strong>{msg.id}</strong><br></br></span> : (idx !== 0 && (msg.id !== msgData[idx-1].id) ? <span className="user-id"><strong>{msg.id}</strong><br></br></span> : ''));
 
         if(msg.participation === undefined) {
           msgStat = (msg.myMsg !== 'Y' ? "other-msg" : "my-msg");
-          msgBox = ( msgStat === 'other-msg' ? <div className={msgStat} key={++id}>{userView}<span className="msg">{msg.message}</span><br></br><span>{dateView}</span></div> : <div className={msgStat} key={++id}><span className="msg">{msg.message}</span><br></br><span>{dateView}</span></div>)
+          msgBox = ( msgStat === 'other-msg' ? <div className={msgStat} key={++id}>{userView}<span className="msg">{msg.message}</span><br></br><span>{timeView}</span></div> : <div className={msgStat} key={++id}><span className="msg">{msg.message}</span><br></br><span>{timeView}</span></div>)
 
           return msgBox;
         } else {
