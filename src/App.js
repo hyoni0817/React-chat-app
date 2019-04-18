@@ -39,7 +39,7 @@ class App extends Component {
     msgOn(data => {
       // 리스트로 메세지 보여주기 위한 코드
       const {msgData} = this.state; 
-      
+
       if((msgData[msgData.length-1].id == data.id) && (msgData[msgData.length-1].time == data.time)){
         sameCnt++;
       } else {
@@ -114,15 +114,12 @@ class App extends Component {
       const { classes } = this.props;
       const {msgData, myNick} = this.state;
       let date = new Date();
-      let amORpm = (date.getHours() < 12 ? "오전 " : "오후 ")
       var id = 0;
-      
       const msgList = msgData.map((msg, idx) => {
         let msgStat = '', msgBox = '', dateView = '', userView = '';
-        
-        dateView = ( idx !== 0 && (msg.time !== msgData[idx-1].time) ? msg.time : (idx !== 0 && (msg.id !== msgData[idx-1].id) ? msg.time : ''));
-        userView = (idx !== 0 && (msg.time !== msgData[idx-1].time) ? <span className="user-id"><strong>{msg.id}</strong><br></br></span> : (idx !== 0 && (msg.id !== msgData[idx-1].id) ? <span className="user-id"><strong>{msg.id}</strong><br></br></span> : ''));
 
+        dateView = ( !(msgData[idx+1] !== undefined && (msgData[idx+1].samecnt > msg.samecnt)) ? msg.time : (msgData[idx+1] !== undefined && (msg.id !== msgData[idx+1].id) ? msg.time : ''));
+        userView = (idx !== 0 && (msg.time !== msgData[idx-1].time) ? <span className="user-id"><strong>{msg.id}</strong><br></br></span> : (idx !== 0 && (msg.id !== msgData[idx-1].id) ? <span className="user-id"><strong>{msg.id}</strong><br></br></span> : ''));
 
         if(msg.participation === undefined) {
           msgStat = (msg.myMsg !== 'Y' ? "other-msg" : "my-msg");
