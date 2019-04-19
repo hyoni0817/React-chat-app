@@ -9,6 +9,9 @@ import Icon from '@material-ui/core/Icon';
 import TextField from '@material-ui/core/TextField';
 
 let saveStat = false;
+let date = new Date();
+let todayDate = date.getFullYear() + "년 " + (date.getDay()+1) + "월 " + date.getDate() + "일";
+
 const styles = theme => ({
   button: {
     margin: theme.spacing.unit,
@@ -28,7 +31,7 @@ class App extends Component {
 
   state = {
     message : '',
-    msgData : [],
+    msgData : [{date:todayDate, time:'N', sysmsg:'todayDate'}],
     myNick : ''
   }
   
@@ -38,7 +41,12 @@ class App extends Component {
     msgOn(data => {
       // 리스트로 메세지 보여주기 위한 코드
       const {msgData} = this.state; 
+      let dateView = '';
 
+      if(msgData[msgData.length-1].date !== data.date){
+        dateView = {date:data.msg, time:'N', sysmsg:'todayDate'};
+        this.setState({msgData:msgData.concat(dateView)})
+      }
       const output = {message : data.msg, date : data.date, time : data.time, id : data.id, myMsg : 'N'}
       this.setState({
         msgData:msgData.concat(output)
@@ -50,6 +58,11 @@ class App extends Component {
     //입장한 user정보 msgData에 저장하기
     userView( userInfo => {
       const {msgData} = this.state;
+      let dateView = '';
+      if(msgData[msgData.length-1].date !== userInfo.date){
+        dateView = {date:userInfo.data, time:'N', sysmsg:'todayDate'};
+        this.setState({msgData:msgData.concat(dateView)})
+      }
 
       if(saveStat === false) {
         this.setState({myNick : userInfo.userId})
@@ -90,7 +103,7 @@ class App extends Component {
     e.preventDefault();
     const {message, msgData} = this.state; 
     let date = new Date();
-    let msgDate = date.getFullYear() + "년" + (date.getDay()+1) + "월" + date.getDate();
+    let msgDate = date.getFullYear() + "년 " + (date.getDay()+1) + "월 " + date.getDate() + "일";
     let amORpm = (date.getHours() < 12 ? "오전 " : "오후 ")
     let hours = (date.getHours()>0 && date.getHours() % 12 ? date.getHours() % 12 : 12);
     let msgTime = amORpm + (date.getMinutes() < 10 ? hours + ":" + "0" + date.getMinutes() : hours + ":" + date.getMinutes());
@@ -111,21 +124,25 @@ class App extends Component {
       var id = 0;
       const msgList = msgData.map((msg, idx) => {
         let msgStat = '', msgBox = '', timeView = '', userView = '';
-
+        let currDate = date.getFullYear() + "년 " + (date.getDay()+1) + "월 " + date.getDate() + "일";
         timeView = ( msgData[idx+1] !== undefined && (msgData[idx+1].id === msg.id) && (msgData[idx+1].time === msg.time) ? '' : msg.time);
         userView = (idx !== 0 && (msg.time !== msgData[idx-1].time) ? <span className="user-id"><strong>{msg.id}</strong><br></br></span> : (idx !== 0 && (msg.id !== msgData[idx-1].id) ? <span className="user-id"><strong>{msg.id}</strong><br></br></span> : ''));
 
-        if(msg.participation === undefined) {
+        if(msg.sysmsg === undefined) {
           msgStat = (msg.myMsg !== 'Y' ? "other-msg" : "my-msg");
           msgBox = ( msgStat === 'other-msg' ? <div className={msgStat} key={++id}>{userView}<span className="msg">{msg.message}</span><br></br><span>{timeView}</span></div> : <div className={msgStat} key={++id}><span className="msg">{msg.message}</span><br></br><span>{timeView}</span></div>)
 
           return msgBox;
         } else {
-            if(msg.participation === 'Y') {
+            if(msg.sysmsg === 'entrance') {
               return (myNick === msg.userId ? <div key={++id}><p id="my-entrace"><strong>{msg.userId}(나)님</strong>이 입장했습니다.</p></div> : <div key={++id}><p id="user-entrace"><strong>{msg.userId}님</strong>이 입장했습니다.</p></div>)
-            } else {
+            } else if(msg.sysmsg === 'out'){
               return <div key={++id}><p id="user-out"><strong>{msg.userId}님</strong>이 퇴장했습니다.</p></div>
-            }          
+            } else {
+              console.log(msg)
+              console.log(msg.date)
+              return <div key={++id}><p id="user-out"><strong>{msg.date}</strong></p></div>
+            }
         }
       })
       
