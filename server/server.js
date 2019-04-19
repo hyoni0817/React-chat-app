@@ -4,7 +4,6 @@ const server = require("http").createServer(app);
 const io = require("socket.io")(server);
 let i = 0;
 let user = [];
-
 io.set("origins", "*:*");
 io.on("connection", socket => {
     console.log("Client Successfully Connected");
@@ -12,7 +11,7 @@ io.on("connection", socket => {
     let userInfo = {};
     userInfo.socketId = socket.id;
     userInfo.userId = '방랑자' + (++i);
-    userInfo.participation = 'Y';
+    userInfo.sysmsg = 'entrance';
     user.push(userInfo);
 
     io.sockets.emit("sysmsg", userInfo); //user정보 보내기
@@ -28,7 +27,7 @@ io.on("connection", socket => {
     });
 
     socket.on('disconnect', () => {
-        userInfo.participation = 'N';
+        userInfo.sysmsg = 'out';
         io.sockets.emit("sysmsg", userInfo);
     })
 
