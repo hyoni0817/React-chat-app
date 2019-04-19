@@ -12,8 +12,8 @@ function msgOn(cb) {
 function userView(cb) {
     socket.on('sysmsg', message => {
         let date = new Date();
-        let msgDate = date.getFullYear() + "년" + (date.getDay()+1) + "월" + date.getDate();
-        const output = {userId : message.userId, date :  msgDate, time : 'N', participation: message.participation}
+        let msgDate = date.getFullYear() + "년 " + (date.getDay()+1) + "월 " + date.getDate() + "일";
+        const output = {userId : message.userId, date :  msgDate, time : 'N', sysmsg: message.sysmsg}
         cb(output);
    
     })
