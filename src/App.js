@@ -10,7 +10,7 @@ import TextField from '@material-ui/core/TextField';
 
 let saveStat = false;
 let date = new Date();
-let todayDate = date.getFullYear() + "년 " + (date.getDay()+1) + "월 " + date.getDate() + "일";
+let todayDate = date.getFullYear() + "년 " + (date.getMonth()+1) + "월 " + date.getDate() + "일";
 
 const styles = theme => ({
   button: {
@@ -103,7 +103,7 @@ class App extends Component {
     e.preventDefault();
     const {message, msgData} = this.state; 
     let date = new Date();
-    let msgDate = date.getFullYear() + "년 " + (date.getDay()+1) + "월 " + date.getDate() + "일";
+    let msgDate = date.getFullYear() + "년 " + (date.getMonth()+1) + "월 " + date.getDate() + "일";
     let amORpm = (date.getHours() < 12 ? "오전 " : "오후 ")
     let hours = (date.getHours()>0 && date.getHours() % 12 ? date.getHours() % 12 : 12);
     let msgTime = amORpm + (date.getMinutes() < 10 ? hours + ":" + "0" + date.getMinutes() : hours + ":" + date.getMinutes());
@@ -124,7 +124,7 @@ class App extends Component {
       var id = 0;
       const msgList = msgData.map((msg, idx) => {
         let msgStat = '', msgBox = '', timeView = '', userView = '';
-        let currDate = date.getFullYear() + "년 " + (date.getDay()+1) + "월 " + date.getDate() + "일";
+        let currDate = date.getFullYear() + "년 " + (date.getMonth()+1) + "월 " + date.getDate() + "일";
         timeView = ( msgData[idx+1] !== undefined && (msgData[idx+1].id === msg.id) && (msgData[idx+1].time === msg.time) ? '' : msg.time);
         userView = (idx !== 0 && (msg.time !== msgData[idx-1].time) ? <span className="user-id"><strong>{msg.id}</strong><br></br></span> : (idx !== 0 && (msg.id !== msgData[idx-1].id) ? <span className="user-id"><strong>{msg.id}</strong><br></br></span> : ''));
 
