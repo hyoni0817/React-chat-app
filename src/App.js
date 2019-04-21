@@ -123,14 +123,16 @@ class App extends Component {
       const {msgData, myNick} = this.state;
       var id = 0;
       const msgList = msgData.map((msg, idx) => {
-        let msgStat = '', msgBox = '', timeView = '', userView = '';
-        let currDate = date.getFullYear() + "년 " + (date.getMonth()+1) + "월 " + date.getDate() + "일";
-        timeView = ( msgData[idx+1] !== undefined && (msgData[idx+1].id === msg.id) && (msgData[idx+1].time === msg.time) ? '' : msg.time);
-        userView = (idx !== 0 && (msg.time !== msgData[idx-1].time) ? <span className="user-id"><strong>{msg.id}</strong><br></br></span> : (idx !== 0 && (msg.id !== msgData[idx-1].id) ? <span className="user-id"><strong>{msg.id}</strong><br></br></span> : ''));
+        let msgStat = '', msgBox = '', userView = '';
+        function timeView(msgTime) {
+          return ( msgData[idx+1] !== undefined && (msgData[idx+1].id === msg.id) && (msgData[idx+1].time === msg.time) ? '' : <p class={msgTime}>{msg.time}</p>);
+        }
+        
+        userView = (idx !== 0 && (msg.time !== msgData[idx-1].time) ? <p className="user-id"><strong>{msg.id}</strong></p> : (idx !== 0 && (msg.id !== msgData[idx-1].id) ? <p className="user-id"><strong>{msg.id}</strong></p> : ''));
 
         if(msg.sysmsg === undefined) {
           msgStat = (msg.myMsg !== 'Y' ? "other-msg" : "my-msg");
-          msgBox = ( msgStat === 'other-msg' ? <div className={msgStat} key={++id}>{userView}<span className="msg">{msg.message}</span><br></br><span>{timeView}</span></div> : <div className={msgStat} key={++id}><span className="msg">{msg.message}</span><br></br><span>{timeView}</span></div>)
+          msgBox = ( msgStat === 'other-msg' ? <div>{userView}<div className={msgStat} key={++id}><p className="msg">{msg.message}</p></div>{timeView('other-msg-time')}</div> : <div><div className={msgStat} key={++id}><p className="msg">{msg.message}</p></div>{timeView('my-msg-time')}</div>)
 
           return msgBox;
         } else {
