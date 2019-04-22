@@ -32,7 +32,6 @@ form {
 
 #msgList {
   height: 100%;
-  
   margin-bottom: 52px;
   padding: 0;
   overflow: auto;
@@ -49,7 +48,8 @@ form {
   border-radius:0.5em;
   -moz-border-radius: 0.5em;
   -webkit-border-radius: 0.5em;
-  margin-bottom: 0px;
+  margin-top:0px;
+  margin-bottom: 10px;
 }
 
 #msgList .other-msg {
@@ -71,37 +71,45 @@ form {
 #user-entrace {
   background-color: rgb(71, 224, 173);
   text-align:center;
+  clear : both;
+  margin-top:0px;
+  margin-bottom:10px;
 }
 
 #my-entrace {
   background-color: rgba(229, 231, 67, 0.986);
   text-align:center;
+  clear : both;
+  margin-top:0px;
+  margin-bottom:10px;
 }
 
 #user-out {
   background-color: thistle;
   text-align:center;
+  clear : both;
+  margin-top:0px;
+  margin-bottom:10px;
 }
 
 .user-id {
   float: left;
   clear: both;
-  margin-top: 10px;
-  margin-bottom: 0px;
+  margin-top: 0px;
+  margin-bottom: 5px;
   display: block;
 }
 
 .my-msg-time {
-  /* position: absolute; */
   float: right;
-  clear: both;
-  margin-top:0px;
+  margin:24px 5px 0 0;
+  margin-bottom:0px;
 }
 
 .other-msg-time {
   float: left;
-  clear: both;
-  margin-top:0px;
+  margin:24px 0 0 5px;
+  margin-bottom:16px;
 }
 @keyframes App-logo-spin {
   from {
