@@ -23,8 +23,8 @@ io.on("connection", socket => {
         io.sockets.emit("chat",dateInfo)
     } 
     io.sockets.emit("sysmsg", userInfo); //user정보 보내기
-    prevDate = msgDate;
-    
+    prevDate = userInfo.msgDate;
+
     socket.on('chat', msg => { // msgEmit에서 메세지 받기
         var output = (msg.time !== 'N' ? {msg : msg.message, date:msg.date, time:msg.time, id : userInfo.userId}:msg)
         //var output = {msg : msg.message, date:msg.date, time:msg.time, id : userInfo.userId};
@@ -46,7 +46,7 @@ io.on("connection", socket => {
         }
         
         io.sockets.emit("sysmsg", userInfo);
-        prevDate = msgDate;
+        prevDate = userInfo.msgDate;
     })
 
 });
