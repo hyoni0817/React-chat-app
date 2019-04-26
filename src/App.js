@@ -41,15 +41,10 @@ class App extends Component {
     msgOn(data => {
       // 리스트로 메세지 보여주기 위한 코드
       const {msgData} = this.state; 
-      let dateView = '';
+      let msgInfo = (data.time !== 'N' ? {message : data.msg, date : data.date, time : data.time, id : data.id, myMsg : 'N'} : data)
 
-      if(msgData[msgData.length-1].date !== data.date){
-        dateView = {date:data.msg, time:'N', sysmsg:'todayDate'};
-        this.setState({msgData:msgData.concat(dateView)})
-      }
-      const output = {message : data.msg, date : data.date, time : data.time, id : data.id, myMsg : 'N'}
       this.setState({
-        msgData:msgData.concat(output)
+        msgData:msgData.concat(msgInfo)
       })
       //새 메시지가 추가될 때마다 스크롤이 아래로 향한다.
       window.scrollTo(0, document.body.scrollHeight);
@@ -59,10 +54,6 @@ class App extends Component {
     userView( userInfo => {
       const {msgData} = this.state;
       let dateView = '';
-      if(msgData[msgData.length-1].date !== userInfo.date){
-        dateView = {date:userInfo.data, time:'N', sysmsg:'todayDate'};
-        this.setState({msgData:msgData.concat(dateView)})
-      }
 
       if(saveStat === false) {
         this.setState({myNick : userInfo.userId})
@@ -107,12 +98,22 @@ class App extends Component {
     let amORpm = (date.getHours() < 12 ? "오전 " : "오후 ")
     let hours = (date.getHours()>0 && date.getHours() % 12 ? date.getHours() % 12 : 12);
     let msgTime = amORpm + (date.getMinutes() < 10 ? hours + ":" + "0" + date.getMinutes() : hours + ":" + date.getMinutes());
-
-    const output = {message : message, date : msgDate, time : msgTime, myMsg : 'Y'};
-    const sendData = {message : message, date : msgDate, time : msgTime};
-    this.setState({msgData : msgData.concat(output)});
-    msgEmit(sendData);
-    this.setState({ message : '', msgData: msgData.concat(output)});
+    
+    const msgInfo = {message : message, date : msgDate, time : msgTime, myMsg : 'Y'};
+    let dateAlarm = '';
+    
+    if(msgData[msgData.length-1].date !== msgDate) {
+      dateAlarm = {date:msgDate, time:'N', sysmsg:'todayDate'}
+      this.setState({msgData : msgData.concat(dateAlarm,msgInfo)});
+      msgEmit(dateAlarm)
+      msgEmit(msgInfo)
+    } else {
+      dateAlarm = {message : message, date : msgDate, time : msgTime};
+      this.setState({msgData : msgData.concat(msgInfo)});
+      msgEmit(dateAlarm);
+    }
+    
+    this.setState({ message : ''});
 
     this.input.current.focus();
     
@@ -125,14 +126,14 @@ class App extends Component {
       const msgList = msgData.map((msg, idx) => {
         let msgStat = '', msgBox = '', userView = '';
         function timeView(msgTime) {
-          return ( msgData[idx+1] !== undefined && (msgData[idx+1].id === msg.id) && (msgData[idx+1].time === msg.time) ? '' : <p class={msgTime}>{msg.time}</p>);
+          return ( msgData[idx+1] !== undefined && (msgData[idx+1].id === msg.id) && (msgData[idx+1].time === msg.time) ? '' : <p className={msgTime}>{msg.time}</p>);
         }
-        
+
         userView = (idx !== 0 && (msg.time !== msgData[idx-1].time) ? <p className="user-id"><strong>{msg.id}</strong></p> : (idx !== 0 && (msg.id !== msgData[idx-1].id) ? <p className="user-id"><strong>{msg.id}</strong></p> : ''));
 
         if(msg.sysmsg === undefined) {
           msgStat = (msg.myMsg !== 'Y' ? "other-msg" : "my-msg");
-          msgBox = ( msgStat === 'other-msg' ? <div>{userView}<div className={msgStat} key={++id}><p className="msg">{msg.message}</p></div>{timeView('other-msg-time')}</div> : <div><div className={msgStat} key={++id}><p className="msg">{msg.message}</p></div>{timeView('my-msg-time')}</div>)
+          msgBox = ( msgStat === 'other-msg' ? <div key={++id}>{userView}<div className={msgStat}><p className="msg">{msg.message}</p></div>{timeView('other-msg-time')}</div> : <div key={++id}><div className={msgStat}><p className="msg">{msg.message}</p></div>{timeView('my-msg-time')}</div>)
 
           return msgBox;
         } else {
@@ -141,13 +142,10 @@ class App extends Component {
             } else if(msg.sysmsg === 'out'){
               return <div key={++id}><p id="user-out"><strong>{msg.userId}님</strong>이 퇴장했습니다.</p></div>
             } else {
-              console.log(msg)
-              console.log(msg.date)
               return <div key={++id}><p id="user-out"><strong>{msg.date}</strong></p></div>
             }
         }
       })
-      
       return (
         <Fragment>
           <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"></link>
