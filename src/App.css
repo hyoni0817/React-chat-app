@@ -28,6 +28,8 @@ form {
   position: fixed;
   bottom: 0;
   width: 100%;
+  border-top: 1px solid gray;
+  display : table;
 }
 
 #msgList {
@@ -111,6 +113,23 @@ form {
   margin:24px 0 0 5px;
   margin-bottom:16px;
 }
+
+#send-btn {
+  display : table-cell;
+  vertical-align: bottom;
+  padding-left:10px;
+}
+
+#contents {
+  width:100%;
+  display : table-cell;
+  vertical-align: middle;
+}
+
+#msg-send-part {
+  display: table-row;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
