@@ -21,8 +21,6 @@ const styles = theme => ({
   },
   textField: {
     border: 0,
-    width: '80%', 
-    marginRight: '.5%'
   }
 });
 
@@ -89,6 +87,11 @@ class App extends Component {
     }
   }
 
+  onKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      this.handleSubmit(e);
+    }
+  };
 
   handleSubmit = (e) => {
     e.preventDefault();
@@ -153,22 +156,31 @@ class App extends Component {
             {msgList}
           </div>
           <form onSubmit={this.handleSubmit}>
-            <TextField
-              id="contents"
-              autoComplete="off"
-              style={{ margin: 8 }}
-              placeholder="메세지를 입력해주세요"
-              className={classes.textField}
-              value={this.state.message} 
-              onChange={e => this.setState({ message: e.target.value})} 
-              inputRef={this.input}
-              margin="normal"
-            />
-            <Button variant="contained" color="primary" onClick={this.handleSubmit} className={classes.button}>
-              Send
-              {/* This Button uses a Font Icon, see the installation instructions in the docs. */}
-              <Icon className={classes.rightIcon}>send</Icon>
-            </Button>
+            <div class="msg-send-part">
+              <div id="contents">
+                <TextField
+                  id="standard-multiline-flexible"
+                  multiline
+                  rowsMax="4"
+                  autoComplete="off"
+                  style={{ margin: 8 }}
+                  placeholder="메세지를 입력해주세요"
+                  className={classes.textField}
+                  value={this.state.message}
+                  onKeyPress={this.onKeyPress} 
+                  fullWidth
+                  onChange={e => this.setState({ message: e.target.value})} 
+                  inputRef={this.input}
+                  margin="normal"
+                />
+              </div>
+              <div id="send-btn">
+                <Button variant="contained" color="primary" onClick={this.handleSubmit} className={classes.button}>
+                  {/* This Button uses a Font Icon, see the installation instructions in the docs. */}
+                  <Icon className={classes.rightIcon}>send</Icon>
+                </Button>
+              </div>
+            </div>  
           </form>
         </Fragment>
       );
