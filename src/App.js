@@ -141,16 +141,17 @@ class App extends Component {
           return msgBox;
         } else {
             if(msg.sysmsg === 'entrance') {
-              return (myNick === msg.userId ? <div key={++id}><p id="my-entrace"><strong>{msg.userId}(나)님</strong>이 입장했습니다.</p></div> : <div key={++id}><p id="user-entrace"><strong>{msg.userId}님</strong>이 입장했습니다.</p></div>)
+              return (myNick === msg.userId ? <div key={++id}><p className="my-entrace"><strong>{msg.userId}(나)님</strong>이 입장했습니다.</p></div> : <div key={++id}><p id="user-entrace"><strong>{msg.userId}님</strong>이 입장했습니다.</p></div>)
             } else if(msg.sysmsg === 'out'){
-              return <div key={++id}><p id="user-out"><strong>{msg.userId}님</strong>이 퇴장했습니다.</p></div>
+              return <div key={++id}><p className="user-out"><strong>{msg.userId}님</strong>이 퇴장했습니다.</p></div>
             } else {
-              return <div key={++id}><p id="user-out"><strong>{msg.date}</strong></p></div>
+              return <div key={++id}><p className="today-date"><strong>{msg.date}</strong></p></div>
             }
         }
       })
       return (
         <Fragment>
+          <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet"></link>
           <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"></link>
           <div id="msgList" ref={ref => {this.msgList = ref;}}>
             {msgList}
