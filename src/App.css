@@ -23,6 +23,9 @@
   color: #61dafb;
 }
 
+body {
+  font-family: 'Nanum Gothic', sans-serif;
+}
 form {
   background: white;
   position: fixed;
@@ -44,12 +47,12 @@ form {
 .msg {
   clear : both;
   background-color: #bdf;
-  border:2px solid #1bf;
+  /* border:2px solid #1bf; */
   padding:0.5em;
   line-height: 1.5em;
-  border-radius:0.5em;
-  -moz-border-radius: 0.5em;
-  -webkit-border-radius: 0.5em;
+  border-radius:0.2em;
+  -moz-border-radius: 0.2em;
+  -webkit-border-radius: 0.2em;
   margin-top:0px;
   margin-bottom: 10px;
 }
@@ -78,7 +81,7 @@ form {
   margin-bottom:10px;
 }
 
-#my-entrace {
+.my-entrace {
   background-color: rgba(229, 231, 67, 0.986);
   text-align:center;
   clear : both;
@@ -86,7 +89,7 @@ form {
   margin-bottom:10px;
 }
 
-#user-out {
+.user-out {
   background-color: thistle;
   text-align:center;
   clear : both;
@@ -106,12 +109,14 @@ form {
   float: right;
   margin:24px 5px 0 0;
   margin-bottom:0px;
+  font-size:12px;
 }
 
 .other-msg-time {
   float: left;
   margin:24px 0 0 5px;
   margin-bottom:16px;
+  font-size:12px;
 }
 
 #send-btn {
@@ -128,6 +133,25 @@ form {
 
 #msg-send-part {
   display: table-row;
+}
+
+.today-date {
+	display: flex;
+	flex-basis: 100%;
+	align-items: center;
+	color: rgba(0, 0, 0, 0.35);
+	font-size: 15px;
+	margin: 8px 0px;
+}
+.today-date::before,
+.today-date::after {
+	content: "";
+	flex-grow: 1;
+	background: rgba(0, 0, 0, 0.35);
+	height: 1px;
+	font-size: 0px;
+	line-height: 0px;
+	/* margin: 0px 16px; */
 }
 
 @keyframes App-logo-spin {
