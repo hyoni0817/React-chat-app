@@ -12,7 +12,7 @@ function msgOn(cb) {
 function userView(cb) {
     socket.on('sysmsg', message => {
 
-        const output = {userId : message.userId, date :  message.msgDate, time : 'N', sysmsg: message.sysmsg}
+        const output = {userId : message.userId, date :  message.date, time : 'N', sysmsg: message.sysmsg}
         cb(output);
    
     })
