@@ -45,7 +45,6 @@ form {
 }
 
 .msg {
-  clear : both;
   background-color: #bdf;
   /* border:2px solid #1bf; */
   padding:0.5em;
@@ -57,20 +56,23 @@ form {
   margin-bottom: 10px;
 }
 
+
 #msgList .other-msg {
+  position: relative;
   max-width:70%;
   display: block;
   float:left;
+  clear: both;
   word-wrap: break-word;
-  clear : both;
 }
 
 #msgList .my-msg {
-  max-width:70%;
+  position: relative;
+  max-width: 70%;
   display: block;
-  float:right;
+  float: right;
+  clear: both;
   word-wrap: break-word;
-  clear : both;
 }
 
 #user-entrace {
@@ -100,23 +102,29 @@ form {
 .user-id {
   float: left;
   clear: both;
-  margin-top: 0px;
+  margin-top: 5px;
   margin-bottom: 5px;
   display: block;
 }
 
 .my-msg-time {
-  float: right;
-  margin:24px 5px 0 0;
-  margin-bottom:0px;
-  font-size:12px;
+  position: absolute;
+  bottom: 10px;
+  right: 100%;
+  margin-right:5px;
+  min-width: 60px;
+  font-size: 12px;
+  text-align: right;
 }
 
 .other-msg-time {
-  float: left;
-  margin:24px 0 0 5px;
-  margin-bottom:16px;
-  font-size:12px;
+  position: absolute;
+  bottom: 10px;
+  left: 100%;
+  margin-left:5px;
+  min-width: 60px;
+  font-size: 12px;
+  text-align: left;
 }
 
 #send-btn {
