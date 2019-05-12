@@ -109,10 +109,11 @@ class App extends Component {
     let dateAlarm = '';
     
     if(msgData[msgData.length-1].date !== msgDate) {
+      //이전의 메세지와 msgDate에 저장된 메세지의 값이 다르면 날짜 알림을 띄웁니다.
       dateAlarm = {date:msgDate, time:'N', sysmsg:'todayDate'}
       this.setState({msgData : msgData.concat(dateAlarm,msgInfo)});
-      msgEmit(dateAlarm)
-      msgEmit(msgInfo)
+      msgEmit(dateAlarm); //날짜 관련 데이터를 먼저 전달합니다.
+      msgEmit(msgInfo);
     } else {
       this.setState({msgData : msgData.concat(msgInfo)});
       msgEmit(msgInfo);
