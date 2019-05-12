@@ -162,6 +162,11 @@ form {
 	/* margin: 0px 16px; */
 }
 
+pre {
+  margin : 0 0;
+  font-family: 'Nanum Gothic', sans-serif;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
