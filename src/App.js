@@ -88,8 +88,11 @@ class App extends Component {
   }
 
   onKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      this.handleSubmit(e);
+    
+    if((e.target.value.search(/\S/) != -1) === true){
+      if (e.key === 'Enter') {
+        this.handleSubmit(e);
+      }
     }
   };
 
@@ -124,7 +127,9 @@ class App extends Component {
   
   render() {
       const { classes } = this.props;
-      const {msgData, myNick} = this.state;
+      const {msgData, myNick, message} = this.state;
+      const isEnabled = message.search(/\S/) != -1; //메세지에 문자가 있는지 체크
+
       var id = 0;
       const msgList = msgData.map((msg, idx) => {
         let msgStat = '', msgBox = '', userView = '';
@@ -136,7 +141,7 @@ class App extends Component {
 
         if(msg.sysmsg === undefined) {
           msgStat = (msg.myMsg !== 'Y' ? "other-msg" : "my-msg");
-          msgBox = ( msgStat === 'other-msg' ? <div key={++id}>{userView}<div className={msgStat}><p className="msg">{msg.message}</p>{timeView('other-msg-time')}</div></div> : <div key={++id}><div className={msgStat}><p className="msg">{msg.message}</p>{timeView('my-msg-time')}</div></div>)
+          msgBox = ( msgStat === 'other-msg' ? <div key={++id}>{userView}<div className={msgStat}><div className="msg"><pre>{msg.message}</pre></div>{timeView('other-msg-time')}</div></div> : <div key={++id}><div className={msgStat}><div className="msg"><pre>{msg.message}</pre></div>{timeView('my-msg-time')}</div></div>)
 
           return msgBox;
           
@@ -158,7 +163,7 @@ class App extends Component {
             {msgList}
           </div>
           <form onSubmit={this.handleSubmit}>
-            <div class="msg-send-part">
+            <div className="msg-send-part">
               <div id="contents">
                 <TextField
                   id="standard-multiline-flexible"
@@ -177,7 +182,7 @@ class App extends Component {
                 />
               </div>
               <div id="send-btn">
-                <Button variant="contained" color="primary" onClick={this.handleSubmit} className={classes.button}>
+                <Button variant="contained" color="primary" onClick={this.handleSubmit} disabled={!isEnabled} className={classes.button} >
                   {/* This Button uses a Font Icon, see the installation instructions in the docs. */}
                   <Icon className={classes.rightIcon}>send</Icon>
                 </Button>
