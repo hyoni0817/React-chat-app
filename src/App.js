@@ -114,9 +114,8 @@ class App extends Component {
       msgEmit(dateAlarm)
       msgEmit(msgInfo)
     } else {
-      dateAlarm = {message : message, date : msgDate, time : msgTime};
       this.setState({msgData : msgData.concat(msgInfo)});
-      msgEmit(dateAlarm);
+      msgEmit(msgInfo);
     }
     
     this.setState({ message : ''});
