@@ -167,6 +167,11 @@ pre {
   font-family: 'Nanum Gothic', sans-serif;
 }
 
+ul {
+  list-style-type : none;
+  padding-inline-start : 0;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
