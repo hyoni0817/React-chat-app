@@ -141,17 +141,17 @@ class App extends Component {
 
         if(msg.sysmsg === undefined) {
           msgStat = (msg.myMsg !== 'Y' ? "other-msg" : "my-msg");
-          msgBox = ( msgStat === 'other-msg' ? <div key={++id}>{userView}<div className={msgStat}><div className="msg"><pre>{msg.message}</pre></div>{timeView('other-msg-time')}</div></div> : <div key={++id}><div className={msgStat}><div className="msg"><pre>{msg.message}</pre></div>{timeView('my-msg-time')}</div></div>)
+          msgBox = ( msgStat === 'other-msg' ? <li key={++id}>{userView}<div className={msgStat}><div className="msg"><pre>{msg.message}</pre></div>{timeView('other-msg-time')}</div></li> : <li key={++id}><div className={msgStat}><div className="msg"><pre>{msg.message}</pre></div>{timeView('my-msg-time')}</div></li>)
 
           return msgBox;
           
         } else {
             if(msg.sysmsg === 'entrance') {
-              return (myNick === msg.userId ? <div key={++id}><p className="my-entrace"><strong>{msg.userId}(나)님</strong>이 입장했습니다.</p></div> : <div key={++id}><p id="user-entrace"><strong>{msg.userId}님</strong>이 입장했습니다.</p></div>)
+              return (myNick === msg.userId ? <li key={++id}><p className="my-entrace"><strong>{msg.userId}(나)님</strong>이 입장했습니다.</p></li> : <li key={++id}><p id="user-entrace"><strong>{msg.userId}님</strong>이 입장했습니다.</p></li>)
             } else if(msg.sysmsg === 'out'){
-              return <div key={++id}><p className="user-out"><strong>{msg.userId}님</strong>이 퇴장했습니다.</p></div>
+              return <li key={++id}><p className="user-out"><strong>{msg.userId}님</strong>이 퇴장했습니다.</p></li>
             } else {
-              return <div key={++id}><p className="today-date"><strong>{msg.date}</strong></p></div>
+              return <li key={++id}><p className="today-date"><strong>{msg.date}</strong></p></li>
             }
         }
       })
@@ -160,7 +160,9 @@ class App extends Component {
           <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet"></link>
           <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"></link>
           <div id="msgList" ref={ref => {this.msgList = ref;}}>
-            {msgList}
+            <ul>
+              {msgList}
+            </ul>
           </div>
           <form onSubmit={this.handleSubmit}>
             <div className="msg-send-part">
