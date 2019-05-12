@@ -149,7 +149,8 @@ form {
 	align-items: center;
 	color: rgba(0, 0, 0, 0.35);
 	font-size: 15px;
-	margin: 8px 0px;
+  margin: 8px 0px;
+  clear: both;
 }
 .today-date::before,
 .today-date::after {
