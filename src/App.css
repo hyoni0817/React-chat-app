@@ -163,6 +163,14 @@ form {
 	/* margin: 0px 16px; */
 }
 
+.today-date::before {
+ margin-right: 7px; 
+}
+
+.today-date::after {
+  margin-left: 7px;
+}
+
 pre {
   margin : 0 0;
   font-family: 'Nanum Gothic', sans-serif;
