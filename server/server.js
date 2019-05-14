@@ -21,7 +21,7 @@ io.on("connection", socket => {
     userInfo.date = connectionDt;  
     user.push(userInfo);
 
-    if(prevDate != userInfo.date){
+    if(prevDate !== userInfo.date){
         dateInfo = {date:userInfo.date, time:'N', sysmsg:'todayDate'}
         socket.broadcast.emit("chat",dateInfo)
     } 
@@ -36,18 +36,17 @@ io.on("connection", socket => {
         let date2 = new Date();
         socket.broadcast.emit("chat", output)
         prevDate = msg.date;
-
         //나를 포함해서 메세지 전송하기
         //io.sockets.emit("chat", output); 
     });
  
     socket.on('disconnect', () => {
         let date3 = new Date();
-        let disconnectDt = date3.getFullYear() + "년 " + (date3.getMonth()+1) + "월 " + (date3.getDate()) + "일";
+        let disconnectDt = date3.getFullYear() + "년 " + (date3.getMonth()+1) + "월 " + date3.getDate() + "일";
         userInfo.sysmsg = 'out';
         userInfo.date = disconnectDt;
 
-        if(prevDate != userInfo.date){
+        if(prevDate !== userInfo.date){
             dateInfo = {date:userInfo.date, time:'N', sysmsg:'todayDate'}
             io.sockets.emit("chat",dateInfo)
         }
