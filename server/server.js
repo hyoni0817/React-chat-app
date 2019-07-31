@@ -2,17 +2,26 @@ const express = require("express");
 const app = express();
 const server = require("http").createServer(app);
 const io = require("socket.io")(server);
+
+//한국 시간으로 설정하기
+var moment = require('moment');
+require('moment-timezone');
+moment.tz.setDefault("Asia/Seoul");
+
 let i = 0;
 let user = [];
 
-let date1 = new Date();
-let prevDate = date1.getFullYear() + "년 " + (date1.getMonth()+1) + "월 " + date1.getDate() + "일"; 
+let prevDate = moment().year() + "년 " + (moment().month()+1) + "월 " + moment().date() + "일";
+// let date1 = new Date();
+// let prevDate = date1.getFullYear() + "년 " + (date1.getMonth()+1) + "월 " + date1.getDate() + "일"; 
 
 io.set("origins", "*:*");
 io.on("connection", socket => {
     console.log("Client Successfully Connected");
-    let date2 = new Date();
-    let connectionDt = date2.getFullYear() + "년 " + (date2.getMonth()+1) + "월 " + date2.getDate() + "일";
+    
+    let connectionDt = moment().year() + "년 " + (moment().month()+1) + "월 " + moment().date() + "일";
+    // let date2 = new Date();
+    // let connectionDt = date2.getFullYear() + "년 " + (date2.getMonth()+1) + "월 " + date2.getDate() + "일";
 
     let userInfo = {}, dateInfo = {};
     userInfo.socketId = socket.id;
@@ -41,8 +50,9 @@ io.on("connection", socket => {
     });
  
     socket.on('disconnect', () => {
-        let date3 = new Date();
-        let disconnectDt = date3.getFullYear() + "년 " + (date3.getMonth()+1) + "월 " + date3.getDate() + "일";
+        let disconnectDt = moment().year() + "년 " + (moment().month()+1) + "월 " + moment().date() + "일";
+        // let date3 = new Date();
+        // let disconnectDt = date3.getFullYear() + "년 " + (date3.getMonth()+1) + "월 " + date3.getDate() + "일";
         userInfo.sysmsg = 'out';
         userInfo.date = disconnectDt;
 
