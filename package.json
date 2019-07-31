@@ -5,6 +5,10 @@
   "dependencies": {
     "@material-ui/core": "^3.9.3",
     "express": "^4.16.4",
+    "handlebars": "^4.1.2",
+    "istanbul-reports": "^2.2.6",
+    "moment": "^2.24.0",
+    "moment-timezone": "^0.5.26",
     "react": "^16.8.5",
     "react-dom": "^16.8.5",
     "react-scripts": "2.1.8",
@@ -12,10 +16,11 @@
     "socket.io-client": "^2.2.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "PORT=4000 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
+
   },
   "eslintConfig": {
     "extends": "react-app"
