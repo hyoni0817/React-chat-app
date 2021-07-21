@@ -70,6 +70,6 @@ io.on("connection", socket => {
 
 });
 
-server.listen(5000, () => {
-    console.log("Backend Server is running on http://localhost:5000")
+server.listen(6000, () => {
+    console.log("Backend Server is running on http://localhost:6000")
 })
