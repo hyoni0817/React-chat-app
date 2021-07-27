@@ -35,4 +35,4 @@
     ```
     cd server && node server.js
     ```
-3.  <http://localhost:5000> 에 접속하면 결과를 확인하실 수 있습니다.
+3.  **개발 모드**는 <http://localhost:3000>으로, **배포 모드**는 <http://localhost:5000>으로 접속하면 결과를 확인하실 수 있습니다.
