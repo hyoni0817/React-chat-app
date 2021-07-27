@@ -1,5 +1,5 @@
 import openSocket from "socket.io-client";
-const socket = openSocket("http://localhost:5000");
+const socket = openSocket("http://localhost:4500");
 
 //메세지 받기
 function msgOn(cb) { 
