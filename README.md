@@ -7,8 +7,9 @@
   <img src="https://img.shields.io/badge/react-16.8.5-blue?style=flat-square"></img>
   <img src="https://img.shields.io/badge/socket.io-2.2.0-orange?style=flat-square"></img>
 </p>
-
-<!-- GIF 추가하기 -->
+<div align="center">
+  <img src="https://devwebdata2021.s3.ap-northeast-2.amazonaws.com/readme/react-chat.gif"></img>
+</div>
 
 ## 기능
 👏 방랑자1, 방랑자2와 같은 닉네임으로 참여하여 대화를 나눌 수 있습니다.   
